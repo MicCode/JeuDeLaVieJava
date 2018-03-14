@@ -9,7 +9,7 @@ public class LeJeuDeLaVie{
             board.update();
             w.redrawBoard(board);
 
-            try {Thread.sleep(25);}
+            try {Thread.sleep(150);}
             catch (InterruptedException e) {e.printStackTrace();}
         }
     }
