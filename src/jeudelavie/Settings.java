@@ -10,15 +10,15 @@ public class Settings {
     /**
      * Taille en pixels du côté d'une cellule de la grille
      */
-    public static final int GRID_SIZE = 10;
+    public static final int GRID_SIZE = 20;
     /**
      * Nombre de cellules en X
      */
-    public static final int CELLS_X = 100;
+    public static final int CELLS_X = 50;
     /**
      * Nombre de Cellules en Y
      */
-    public static final int CELLS_Y = 100;
+    public static final int CELLS_Y = 50;
     /**
      * Marge en pixels dans une cellule
      */
@@ -26,7 +26,7 @@ public class Settings {
     /**
      * Temps en ms entre deux refresh de la grille
      */
-    public static final int CLOCK_TIME = 20;
+    public static final int CLOCK_TIME = 25;
     /**
      * Détermine si la grille doit être affichée
      */

@@ -10,12 +10,13 @@ public class LeJeuDeLaVie{
     public static void main(String[] args) {
         Board board = new Board();
         MainWindow w = new MainWindow();
+        w.redrawBoard(board);
         while(true){
-            board.update();
-            w.redrawBoard(board);
-
             try {Thread.sleep(Settings.CLOCK_TIME);}
             catch (InterruptedException e) {e.printStackTrace();}
+
+            board.update();
+            w.redrawBoard(board);
         }
     }
 }

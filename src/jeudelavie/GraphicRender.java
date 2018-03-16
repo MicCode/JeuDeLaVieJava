@@ -47,14 +47,7 @@ public class GraphicRender extends JPanel {
 
         for(int x = 0; x < Settings.CELLS_X; x++){
             for(int y = 0; y < Settings.CELLS_Y; y++){
-                char c = this.board.getCell(x,y).getType();
-                switch(c){
-                    case 'A' : g.setColor(new Color(100,0,50));break;
-                    case 'B' : g.setColor(new Color(100,50,50));break;
-                    case 'C' : g.setColor(new Color(100,50,100));break;
-                    case 'D' : g.setColor(new Color(100,100,100));break;
-                    default : g.setColor(Color.WHITE);
-                }
+                g.setColor(this.board.getCell(x,y).getColor());
                 g.fillRect(
                         minX + x * Settings.GRID_SIZE + Settings.CELL_PADDING,
                         minY + y * Settings.GRID_SIZE + Settings.CELL_PADDING,
