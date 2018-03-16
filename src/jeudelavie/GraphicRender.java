@@ -3,12 +3,17 @@ package jeudelavie;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe de gestion des appels graphiques
+ *
+ * @author MicCode
+ * @version 1.0
+ */
 public class GraphicRender extends JPanel {
+    /**
+     * Plateau de jeu
+     */
     private Board board;
-    private int gridSize = 5;
-    private int paddingLeft = 0;
-    private int paddingTop = 0;
-    private int cellPadding =0;
 
     public void paintComponent(Graphics g) {
         this.drawBoard(g);
@@ -18,39 +23,44 @@ public class GraphicRender extends JPanel {
         this.board = board;
     }
 
+    /**
+     * Dessine le plateau et les cellules
+     * @param g
+     */
     private void drawBoard(Graphics g){
-        int minX = this.paddingLeft;
-        int minY = this.paddingTop;
-        int maxX = this.paddingLeft + this.gridSize * this.board.getCellsX();
-        int maxY = this.paddingTop + this.gridSize * this.board.getCellsY();
+        int minX = 0;
+        int minY = 0;
+        int maxX = Settings.GRID_SIZE * Settings.CELLS_X;
+        int maxY = Settings.GRID_SIZE * Settings.CELLS_Y;
 
-        g.setColor(Color.LIGHT_GRAY);
-        for(int x = 0; x <= this.board.getCellsX(); x++) {
-            g.drawLine(x * this.gridSize + this.paddingLeft, minY, x * this.gridSize + this.paddingLeft, maxY);
+        if(Settings.DRAW_GRID) {
+            g.setColor(Color.LIGHT_GRAY);
+            for (int x = 0; x <= Settings.CELLS_X; x++) {
+                g.drawLine(x*Settings.GRID_SIZE, minY, x*Settings.GRID_SIZE, maxY);
+            }
+            for (int y = 0; y <= Settings.CELLS_Y; y++) {
+                g.drawLine(minX, y*Settings.GRID_SIZE, maxX, y*Settings.GRID_SIZE);
+            }
+            g.setColor(Color.BLACK);
+            g.drawRect(minX, minY, Settings.CELLS_X * Settings.GRID_SIZE, Settings.CELLS_Y * Settings.GRID_SIZE);
         }
-        for(int y = 0; y <= this.board.getCellsY(); y++) {
-            g.drawLine(minX, y * this.gridSize + this.paddingTop,maxX,y * this.gridSize + this.paddingTop);
-        }
-        g.setColor(Color.BLACK);
-        g.drawRect(minX,minY,this.board.getCellsX()*this.gridSize,this.board.getCellsY()*this.gridSize);
 
-        for(int x = 0; x < this.board.getCellsX(); x++){
-            for(int y = 0; y < this.board.getCellsY(); y++){
+        for(int x = 0; x < Settings.CELLS_X; x++){
+            for(int y = 0; y < Settings.CELLS_Y; y++){
                 char c = this.board.getCell(x,y).getType();
                 switch(c){
                     case 'A' : g.setColor(new Color(100,0,50));break;
                     case 'B' : g.setColor(new Color(100,50,50));break;
                     case 'C' : g.setColor(new Color(100,50,100));break;
                     case 'D' : g.setColor(new Color(100,100,100));break;
-                    case 'E' : g.setColor(new Color(100,100,150));break;
-                    case 'F' : g.setColor(new Color(100,150,150));break;
-                    case 'G' : g.setColor(new Color(100,150,200));break;
-                    case 'H' : g.setColor(new Color(100,200,200));break;
-                    case 'I' : g.setColor(new Color(100,200,250));break;
-                    case 'J' : g.setColor(new Color(100,250,250));break;
                     default : g.setColor(Color.WHITE);
                 }
-                g.fillRect(minX + x * this.gridSize + this.cellPadding, minY + y * this.gridSize + this.cellPadding, this.gridSize - this.cellPadding * 2, this.gridSize - this.cellPadding * 2);
+                g.fillRect(
+                        minX + x * Settings.GRID_SIZE + Settings.CELL_PADDING,
+                        minY + y * Settings.GRID_SIZE + Settings.CELL_PADDING,
+                        Settings.GRID_SIZE - Settings.CELL_PADDING * 2,
+                        Settings.GRID_SIZE - Settings.CELL_PADDING * 2
+                );
             }
         }
     }

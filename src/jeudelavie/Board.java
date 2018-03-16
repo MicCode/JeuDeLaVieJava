@@ -1,57 +1,72 @@
 package jeudelavie;
 
+/**
+ * Classe du plateau de jeu
+ *
+ * @author MicCode
+ * @version 1.0
+ */
 public class Board {
-    private int cellsX = 240;
-    private int cellsY = 200;
+    /**
+     * Ensemble des cellules
+     */
     private Cell[][] cells;
 
+    /**
+     * Constructeur
+     */
     public Board(){
         this.initBoard();
     }
-    public Board(int cellsX, int cellsY){
-        this.cellsX = cellsX;
-        this.cellsY = cellsY;
-        this.initBoard();
-    }
 
+    /**
+     * Initiatisation du plateau avec des cellules aléatoires
+     */
     private void initBoard(){
-        this.cells = new Cell[cellsX][cellsY];
-        for(int x = 0; x < this.cellsX; x++){
-            for(int y = 0; y < this.cellsY; y++){
+        this.cells = new Cell[Settings.CELLS_X][Settings.CELLS_Y];
+        for(int x = 0; x < Settings.CELLS_X; x++){
+            for(int y = 0; y < Settings.CELLS_Y; y++){
                 double n = Math.random();
                 if(n < 0.1) this.cells[x][y] = new Cell('A');
                 else if(n < 0.2) this.cells[x][y] = new Cell('B');
                 else if(n < 0.3) this.cells[x][y] = new Cell('C');
                 else if(n < 0.4) this.cells[x][y] = new Cell('D');
-                else if(n < 0.5) this.cells[x][y] = new Cell('E');
-                else if(n < 0.6) this.cells[x][y] = new Cell('F');
-                else if(n < 0.7) this.cells[x][y] = new Cell('G');
-                else if(n < 0.8) this.cells[x][y] = new Cell('H');
-                else if(n < 0.9) this.cells[x][y] = new Cell('I');
-                else if(n < 1) this.cells[x][y] = new Cell('J');
                 else this.cells[x][y] = new Cell('0');
             }
         }
     }
 
+    /**
+     * Mise à jour de toutes les cellules du plateau
+     */
     public void update(){
-        Cell[][] snapshotCells = this.cells;
-        for(int x = 0; x < cellsX; x++){
-            for(int y = 0; y < cellsY; y++){
+        Cell[][] snapshotCells = new Cell[Settings.CELLS_X][Settings.CELLS_Y];
+
+        for(int x = 0; x < Settings.CELLS_X; x++) {
+            for (int y = 0; y < Settings.CELLS_Y; y++) {
+                snapshotCells[x][y] = new Cell(this.cells[x][y].getType());
+            }
+        }
+        for(int x = 0; x < Settings.CELLS_X; x++){
+            for(int y = 0; y < Settings.CELLS_Y; y++){
                 Cell[] neighbors = new Cell[8];
                 neighbors[0] = x > 0 && y > 0 ? this.cells[x-1][y-1] : new Cell('0'); //TOP LEFT
                 neighbors[1] = y > 0 ? this.cells[x][y-1] : new Cell('0'); //TOP CENTER
-                neighbors[2] = x < this.cellsX-1 && y > 0 ? this.cells[x+1][y-1] : new Cell('0'); //TOP RIGHT
-                neighbors[3] = x < this.cellsX-1 ? this.cells[x+1][y] : new Cell('0'); //MIDDLE RIGHT
-                neighbors[4] = x < this.cellsX-1 && y < this.cellsY-1 ? this.cells[x+1][y+1] : new Cell('0'); //BOTTOM RIGHT
-                neighbors[5] = y < this.cellsY-1 ? this.cells[x][y+1] : new Cell('0'); //BOTTOM CENTER
-                neighbors[6] = x > 0 && y < this.cellsY-1 ? this.cells[x-1][y+1] : new Cell('0'); // BOTTOM LEFT
+                neighbors[2] = x < Settings.CELLS_X-1 && y > 0 ? this.cells[x+1][y-1] : new Cell('0'); //TOP RIGHT
+                neighbors[3] = x < Settings.CELLS_X-1 ? this.cells[x+1][y] : new Cell('0'); //MIDDLE RIGHT
+                neighbors[4] = x < Settings.CELLS_X-1 && y < Settings.CELLS_Y-1 ? this.cells[x+1][y+1] : new Cell('0'); //BOTTOM RIGHT
+                neighbors[5] = y < Settings.CELLS_Y-1 ? this.cells[x][y+1] : new Cell('0'); //BOTTOM CENTER
+                neighbors[6] = x > 0 && y < Settings.CELLS_Y-1 ? this.cells[x-1][y+1] : new Cell('0'); // BOTTOM LEFT
                 neighbors[7] = x > 0 ? this.cells[x-1][y] : new Cell('0'); //MIDDLE LEFT
                 snapshotCells[x][y].setNeighbors(neighbors);
                 snapshotCells[x][y].updateLife();
             }
         }
-        this.cells = snapshotCells;
+        for(int x = 0; x < Settings.CELLS_X; x++) {
+            for (int y = 0; y < Settings.CELLS_Y; y++) {
+                this.cells[x][y] = new Cell(snapshotCells[x][y].getType());
+            }
+        }
     }
 
     public void setCells(Cell[][] cells){
@@ -60,18 +75,13 @@ public class Board {
     public Cell[][] getCells(){
         return cells;
     }
-    public int getCellsX() {
-        return cellsX;
-    }
-    public void setCellsX(int cellsX) {
-        this.cellsX = cellsX;
-    }
-    public int getCellsY() {
-        return cellsY;
-    }
-    public void setCellsY(int cellsY) {
-        this.cellsY = cellsY;
-    }
+
+    /**
+     * Renvoit une seule cellule positionnée en x,y
+     * @param x
+     * @param y
+     * @return La cellule pointée
+     */
     public Cell getCell(int x, int y){
         return this.cells[x][y];
     }
