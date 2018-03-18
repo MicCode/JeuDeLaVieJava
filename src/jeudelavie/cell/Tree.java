@@ -15,8 +15,7 @@ public class Tree extends Cell {
             if(this.neighbors[i] instanceof Water) waterSum++;
             else if(this.neighbors[i] instanceof Fire) fireSum++;
         }
-        if(Math.random() < 0.00001) return new Fire();
-        else if(waterSum > fireSum + 1) return this;
+        if(waterSum > fireSum + 1) return this;
         else if(fireSum >= 1) return new Fire();
         else return this;
     }

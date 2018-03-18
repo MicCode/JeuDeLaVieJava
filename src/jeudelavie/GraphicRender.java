@@ -1,5 +1,7 @@
 package jeudelavie;
 
+import jeudelavie.cell.Fire;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -56,5 +58,9 @@ public class GraphicRender extends JPanel {
                 );
             }
         }
+    }
+
+    public void clicked(int x, int y){
+        this.board.setCell(x,y,new Fire());
     }
 }

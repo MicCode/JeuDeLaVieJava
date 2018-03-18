@@ -82,4 +82,9 @@ public class Board {
     public Cell getCell(int x, int y){
         return this.cells[x][y];
     }
+
+    public void setCell(int x, int y, Cell newCell){
+        System.out.println("x = " + x/Settings.GRID_SIZE + "  y = " + (y-25)/Settings.GRID_SIZE);
+        this.cells[x/Settings.GRID_SIZE][(y-25)/Settings.GRID_SIZE] = newCell;
+    }
 }

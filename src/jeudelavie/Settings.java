@@ -10,7 +10,7 @@ public class Settings {
     /**
      * Taille en pixels du côté d'une cellule de la grille
      */
-    public static final int GRID_SIZE = 20;
+    public static final int GRID_SIZE = 10;
     /**
      * Nombre de cellules en X
      */
